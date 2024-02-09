@@ -1,0 +1,76 @@
+org: mflamb
+app: coemeta-scratchpad
+service: serverless-python-scratchpad
+
+configValidationMode: error
+
+plugins:
+  - serverless-python-requirements
+  - serverless-pseudo-parameters
+  - serverless-prune-plugin
+
+package:
+  patterns:
+    - "!node_modules/**"
+    - "!venv/**"
+    - "!apienv/**"
+    - "!__pycache__/**"
+
+custom:
+  # pythonRequirements:
+  #   usePipenv: false
+  prune:
+    automatic: true
+    number: 3
+  stage: ${opt:stage, 'dev'}
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: ${self:custom.stage}
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    shouldStartNameWithService: true
+  environment:
+    API_GATEWAY_ID: !Ref "ApiGatewayRestApi"
+    API_GATEWAY_URL: !Join
+      - ""
+      - - "https://"
+        - !Ref ApiGatewayRestApi
+        - ".execute-api.us-east-1.amazonaws.com/prod"
+        - ${self.provider.stage}
+
+functions:
+  hello:
+    handler: handler.hello
+    timeout: 30
+    events:
+      - http:
+          path: stripe
+          method: get
+# resources:
+#   Resources:
+#     OAuthSNSTopic:
+#       Type: AWS::SNS::Topic
+#       Properties:
+#         TopicName: ${self:service}-${self:provider.stage}-oauth
+#         DisplayName: OAuthRefreshEvents
+#         Tags:
+#           - Key: project
+#             Value: ${self:service}
+#           - Key: Environment
+#             Value: ${self:provider.stage}
+#     OAuthSNSSubscription:
+#       Type: AWS::SNS::Subscription
+#       DependsOn: OAuthSNSTopic
+#       Properties:
+#         Endpoint: ${ssm:/${self:provider.stage}/lambda/airtableGlue/sns/alert/email~true}
+#         Protocol: email
+#         TopicArn: !Ref OAuthSNSTopic
+#     OAuthSNSSubscriptionAlt:
+#       Type: AWS::SNS::Subscription
+#       DependsOn: OAuthSNSTopic
+#       Properties:
+#         Endpoint: ${ssm:/${self:provider.stage}/lambda/airtableGlue/sns/quickbooks/email~true}
+#         Protocol: email
+#         TopicArn: !Ref OAuthSNSTopic
