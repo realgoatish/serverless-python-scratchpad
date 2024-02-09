@@ -42,7 +42,7 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: glue.handler.hello
     timeout: 30
     events:
       - http:
