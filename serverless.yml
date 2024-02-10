@@ -1,5 +1,3 @@
-org: mflamb
-app: coemeta-scratchpad
 service: serverless-python-scratchpad
 
 configValidationMode: error
