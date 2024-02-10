@@ -32,6 +32,7 @@ provider:
   apiGateway:
     shouldStartNameWithService: true
   environment:
+    MAILCHIMP_KEY: ${ssm:/${self:provider.stage}/lambda/airtableGlue/mailchimp/apiKey~true}
     API_GATEWAY_ID: !Ref "ApiGatewayRestApi"
     API_GATEWAY_URL: !Join
       - ""

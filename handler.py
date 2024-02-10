@@ -1,9 +1,15 @@
 import json
-
+import os
 
 def hello(event, context):
+    # mailchimp_key = os.getenv("MAILCHIMP_KEY")
+    # body = {
+    #     "message": f"here's your SSM parameter: {mailchimp_key}",
+    #     "input": event,
+    # }
+
     body = {
-        "message": "Go Serverless v3.0! Your function executed successfully!",
+        "message": "AYOOOOOOOO",
         "input": event,
     }
 
