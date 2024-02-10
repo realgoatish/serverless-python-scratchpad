@@ -8,10 +8,6 @@ black = "==18.9b0"
 flake8 = "*"
 pytest = "*"
 isort = "*"
-boto3 = "*"
-
-[packages]
-pytest = "*"
 
 [requires]
 python_version = "3.9"
