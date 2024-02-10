@@ -1,3 +1,5 @@
+from ..glue.handler import hello
+
 def func(x):
     return x + 1
 
