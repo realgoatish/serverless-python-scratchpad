@@ -17,8 +17,8 @@ package:
     - "!__pycache__/**"
 
 custom:
-  # pythonRequirements:
-  #   usePipenv: false
+  pythonRequirements:
+    usePoetry: false
   prune:
     automatic: true
     number: 3
@@ -43,7 +43,7 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: glue.handler.hello
     timeout: 30
     events:
       - http:

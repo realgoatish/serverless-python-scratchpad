@@ -9,7 +9,11 @@ def hello(event, context):
     # }
 
     body = {
+<<<<<<< HEAD:handler.py
         "message": "AYOOOOOOOO",
+=======
+        "message": "YESH!",
+>>>>>>> a35b15a378e1990bb7e5438e911619a8d880a35c:glue/handler.py
         "input": event,
     }
 
