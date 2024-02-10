@@ -9,7 +9,7 @@ def hello(event, context):
     # }
 
     body = {
-        "message": "AYOOOOOOOO",
+        "message": "HEBBO GOODBYE",
         "input": event,
     }
 
