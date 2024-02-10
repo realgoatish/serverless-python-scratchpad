@@ -1,4 +1,4 @@
-from ..glue.handler import hello
+from glue.handler import hello
 
 def func(x):
     return x + 1
