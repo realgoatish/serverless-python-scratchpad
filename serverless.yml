@@ -1,4 +1,4 @@
-org: mflamb
+# org: mflamb
 app: coemeta-scratchpad
 service: serverless-python-scratchpad
 
