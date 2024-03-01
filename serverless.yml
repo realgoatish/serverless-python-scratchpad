@@ -49,29 +49,3 @@ functions:
       - http:
           path: stripe
           method: get
-# resources:
-#   Resources:
-#     OAuthSNSTopic:
-#       Type: AWS::SNS::Topic
-#       Properties:
-#         TopicName: ${self:service}-${self:provider.stage}-oauth
-#         DisplayName: OAuthRefreshEvents
-#         Tags:
-#           - Key: project
-#             Value: ${self:service}
-#           - Key: Environment
-#             Value: ${self:provider.stage}
-#     OAuthSNSSubscription:
-#       Type: AWS::SNS::Subscription
-#       DependsOn: OAuthSNSTopic
-#       Properties:
-#         Endpoint: ${ssm:/${self:provider.stage}/lambda/airtableGlue/sns/alert/email~true}
-#         Protocol: email
-#         TopicArn: !Ref OAuthSNSTopic
-#     OAuthSNSSubscriptionAlt:
-#       Type: AWS::SNS::Subscription
-#       DependsOn: OAuthSNSTopic
-#       Properties:
-#         Endpoint: ${ssm:/${self:provider.stage}/lambda/airtableGlue/sns/quickbooks/email~true}
-#         Protocol: email
-#         TopicArn: !Ref OAuthSNSTopic
