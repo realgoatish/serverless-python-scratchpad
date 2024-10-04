@@ -31,15 +31,27 @@ provider:
   lambdaHashingVersion: 20201221
   apiGateway:
     shouldStartNameWithService: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "ssm:*"
+        # - "ssm:GetParameter"
+        # - "ssm:GetParametersByPath"
+        # - "ssm:PutParameter"
+      Resource:
+        - "arn:aws:ssm:us-east-1:#{AWS::AccountId}:parameter/${self:provider.stage}/lambda/airtableGlue*"
+        - "arn:aws:ssm:us-east-1:#{AWS::AccountId}:parameter/dev/lambda/airtableGlue*"
   environment:
     MAILCHIMP_KEY: ${ssm:/${self:provider.stage}/lambda/airtableGlue/mailchimp/apiKey~true}
+    DONORBOX_API_USER: ${ssm:/${self:provider.stage}/lambda/airtableGlue/donorbox/apiUser~true}
+    STAGE: ${self:provider.stage}
     API_GATEWAY_ID: !Ref "ApiGatewayRestApi"
     API_GATEWAY_URL: !Join
       - ""
       - - "https://"
-        - !Ref ApiGatewayRestApi
-        - ".execute-api.us-east-1.amazonaws.com/prod"
-        - ${self.provider.stage}
+        - ${self:provider.environment.API_GATEWAY_ID}
+        - ".execute-api.us-east-1.amazonaws.com/"
+        - ${self:provider.stage}
 
 functions:
   hello:
@@ -48,4 +60,11 @@ functions:
     events:
       - http:
           path: stripe
+          method: get
+  aws_ssm_cron:
+    handler: glue.ssm.create_ssm_parameters
+    timeout: 30
+    events:
+      - http:
+          path: ssmParams
           method: get
